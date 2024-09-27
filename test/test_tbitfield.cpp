@@ -309,3 +309,71 @@ TEST(TBitField, bitfields_with_different_bits_are_not_equal)
 
   EXPECT_NE(bf1, bf2);
 }
+
+TEST(TBitField, operator_or_with_bitfields_of_different_sizes)
+{
+    const int size1 = 70;
+    const int size2 = 35;
+    TBitField bf1(size1), bf2(size2);
+
+    bf1.SetBit(65);
+    bf1.SetBit(30);
+
+    bf2.SetBit(30);
+    
+    TBitField res1 = bf1 | bf2;
+    TBitField res2 =  TBitField(70);
+    res2.SetBit(65);
+    res2.SetBit(30);
+
+    EXPECT_EQ(res1, res2);
+}
+
+TEST(TBitField, operator_or_with_bitfields_of_different_sizes_reverse_order)
+{
+    const int size1 = 70;
+    const int size2 = 35;
+    TBitField bf1(size1), bf2(size2);
+
+    bf1.SetBit(65);
+    bf1.SetBit(30);
+    bf2.SetBit(30);
+
+    TBitField res1 = bf2 | bf1;
+    TBitField res2 = bf1 | bf2;
+
+    EXPECT_EQ(res1, res2);
+}
+
+TEST(TBitField, operator_and_with_bitfields_of_different_sizes)
+{
+    const int size1 = 70;
+    const int size2 = 35;
+    TBitField bf1(size1), bf2(size2);
+
+    bf1.SetBit(65);
+    bf1.SetBit(30);
+    bf2.SetBit(30);
+
+    TBitField res1 = bf1 & bf2;
+    TBitField res2 = TBitField(70);
+    res2.SetBit(30);
+
+    EXPECT_EQ(res1, res2);
+}
+
+TEST(TBitField, operator_and_with_bitfields_of_different_sizes_reverse_order)
+{
+    const int size1 = 70;
+    const int size2 = 35;
+    TBitField bf1(size1), bf2(size2);
+
+    bf1.SetBit(65);
+    bf1.SetBit(30);
+    bf2.SetBit(30);
+
+    TBitField res1 = bf2 & bf1;
+    TBitField res2 = bf1 & bf2;
+
+    EXPECT_EQ(res1, res2);
+}
